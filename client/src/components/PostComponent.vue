@@ -21,6 +21,7 @@
       :item="post"
       :index="index"
       :key="post._id"
+      v-on:dblclick="deletePost(post._id)"
     >
       {{
         `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}`
@@ -52,6 +53,10 @@ export default {
   methods: {
     async createPost() {
       await PostService.insertPost(this.text);
+      this.posts = await PostService.getPosts();
+    },
+    async deletePost(id) {
+      await PostService.deletePost(id);
       this.posts = await PostService.getPosts();
     },
   },
